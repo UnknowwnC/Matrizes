@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author andre
+ * @author Me
  */
 public class Tripleta {
 
@@ -257,7 +257,7 @@ public class Tripleta {
 }
 
     public int[] SumarColumnas() {
-    int totalColumnas = Mtri[0][1]; // número de filas 
+    int totalColumnas = Mtri[0][1]; // número de columnas 
     int[] sumasPorColumna = new int[totalColumnas + 1];
 
     for (int i = 1; i <= Mtri[0][2]; i++) {
@@ -322,5 +322,81 @@ C.setMtri(0, 2, k - 1);
         return C;
 
     }
+     public Tripleta MultiplicarTripletas(Tripleta B) {
+
+        boolean multiplicable = false;
+
+        // columnas de A iguales a las filas de B 
+        if (this.Mtri[0][1] == B.Mtri[0][0]) {
+            multiplicable = true;
+        }
+
+        if (multiplicable == true) {
+
+            int max = this.Mtri[0][2] * B.Mtri[0][2] + 1;
+            Tripleta C = new Tripleta(max);
+
+            int k = 1;
+
+            for (int i = 1; i <= this.Mtri[0][2]; i++) { // para A
+
+                int filaA = this.Mtri[i][0];
+                int colA = this.Mtri[i][1];
+                int valA = this.Mtri[i][2];
+
+                for (int j = 1; j <= B.Mtri[0][2]; j++) { // para B 
+
+                    int filaB = B.Mtri[j][0];
+                    int colB = B.Mtri[j][1];
+                    int valB = B.Mtri[j][2];
+
+                    if (colA == filaB) {
+                        int resultado = valA * valB;
+
+                        boolean existe = false;
+
+                        for (int x = 1; x < k; x++) {
+                            if (C.Mtri[x][0] == filaA && C.Mtri[x][1] == colB) {
+                                C.Mtri[x][2] += resultado;
+                                existe = true;
+                                break;
+                            }
+                        }
+                        if (existe == false) {
+                            C.Mtri[k][0] = filaA;
+                            C.Mtri[k][1] = colB;
+                            C.Mtri[k][2] = resultado;
+                            k++;
+                        }
+                    }
+                }
+            }
+
+            // columnas filas y datos
+            C.Mtri[0][0] = this.Mtri[0][0];
+            C.Mtri[0][1] = B.Mtri[0][1];
+            C.Mtri[0][2] = k - 1;
+            
+            
+
+            return C;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Error, la matriz A debe tener la misma cantidad de columnas que filas de la matriz B !!");
+            return null;
+        }
+    }
+
+  public int contador(){
+      int contador=0;
+      for(int i=1;i>Mtri.length;i++){
+          for(int j=1;j>Mtri.length;j++){
+              contador++;
+          }
+      }
+      return contador;
+      
+      
+  }  
 
 }
