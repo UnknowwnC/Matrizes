@@ -22,7 +22,7 @@ public class MatDisper {
             opciones += "[FORMA 2]\n\n";
         }
  
-         opciones += "Forma 2"
+         opciones += "Forma 2\n"
                       + "  1. Insertar elemento\n"
                       + "  2. Eliminar por coordenada\n"
                       + "  3. Eliminar por dato\n"
@@ -108,7 +108,7 @@ public class MatDisper {
                         int columna = Integer.parseInt(JOptionPane.showInputDialog("Columna:"));
                         int dato = Integer.parseInt(JOptionPane.showInputDialog("Dato:"));
                         T1.Insertar(fila, columna, dato);
-                    } else {
+                    } else if (tipo == 2){
                           JOptionPane.showMessageDialog(null, F2.Mostrar(tamFilaa, tamColumna));
                         int fila = Integer.parseInt(JOptionPane.showInputDialog("Fila:"));
                         int columna = Integer.parseInt(JOptionPane.showInputDialog("Columna:"));
@@ -124,7 +124,7 @@ public class MatDisper {
                         int Efila = Integer.parseInt(JOptionPane.showInputDialog("Fila a eliminar:"));
                         int Ecolumna = Integer.parseInt(JOptionPane.showInputDialog("Columna a eliminar:"));
                         T1.Eliminarcoordenada(Efila, Ecolumna);
-                    } else {
+                    } else if (tipo == 2){
                         JOptionPane.showMessageDialog(null, F2.Mostrar(tamFilaa, tamColumna));
                         int Efila = Integer.parseInt(JOptionPane.showInputDialog("Fila a eliminar:"));
                         int Ecolumna = Integer.parseInt(JOptionPane.showInputDialog("Columna a eliminar:"));
@@ -137,7 +137,7 @@ public class MatDisper {
                          
                         int Dato = Integer.parseInt(JOptionPane.showInputDialog("Dato a eliminar:"+"\n" + T1.Mostrar()));
                         T1.Eliminardato(Dato);
-                    } else {
+                    } else if (tipo == 2) {
                         int Dato = Integer.parseInt(JOptionPane.showInputDialog("Dato a eliminar:" + "\n" + F2.Mostrar(tamFilaa, tamColumna)));
                       F2.Eliminardato(Dato);
                     }
@@ -147,7 +147,7 @@ public class MatDisper {
                     if (tipo == 1) {
                           JOptionPane.showMessageDialog(null, T1.Mostrar());
                        T1.SumarFilas();
-                    } else {
+                    } else if (tipo == 2){
                          JOptionPane.showMessageDialog(null, F2.Mostrar(tamFilaa, tamColumna));
                         
                        F2.sumarFilas();
@@ -158,7 +158,7 @@ public class MatDisper {
                     if (tipo == 1) {
                           JOptionPane.showMessageDialog(null, T1.Mostrar());
                       T1.SumarColumnas();
-                    } else {
+                    } else if (tipo == 2){
                        JOptionPane.showMessageDialog(null, F2.Mostrar(tamFilaa, tamColumna));
                         F2.sumarColumnas();
                     }
@@ -177,7 +177,7 @@ public class MatDisper {
                         Tripleta C = T1.suma(B);
                         if (C != null)
                             JOptionPane.showMessageDialog(null, "Resultado A + B:\n\n" + C.Mostrar());
-                    } else {
+                    } else if (tipo == 2){
                         int tamFilaB = Integer.parseInt(JOptionPane.showInputDialog("Filas de la matriz B:"));
                         int tamColumnaB = Integer.parseInt(JOptionPane.showInputDialog("Columnas de la matriz B:"));
                         int MatB[][] = new int[tamFilaB][tamColumnaB];
@@ -205,7 +205,19 @@ public class MatDisper {
                         Tripleta triRes = T1.MultiplicarTripletas(triB);
                         if (triRes != null)
                             JOptionPane.showMessageDialog(null, "Resultado A x B:\n\n" + triRes.Mostrar());
-                    } else {
+                    } else if (tipo == 2){
+                        int fB = Integer.parseInt(JOptionPane.showInputDialog("Filas de la matriz B:"));
+                        int cB = Integer.parseInt(JOptionPane.showInputDialog("Columnas de la matriz B:"));
+                        int[][] mAuxB = new int[fB][cB];
+                        random(mAuxB, fB, cB);
+                        Forma2 B = new Forma2(fB, cB);
+                        B.llenar(Mat);
+                        JOptionPane.showMessageDialog(null, "Matriz A:\n\n" + F2.Mostrar(tamFilaa,tamColumna));
+                        JOptionPane.showMessageDialog(null, "Matriz B:\n\n" + B.Mostrar(fB,cB));
+                        Forma2 Mult = F2.multiplicar(B);
+                        if (Mult != null)
+                            JOptionPane.showMessageDialog(null, "Resultado A x B:\n\n" + Mult.Mostrar(tamFilaa, tamColumna));
+                        
                        
                     }
                     break;
@@ -213,7 +225,7 @@ public class MatDisper {
                 case 8: // Mostrar
                     if (tipo == 1)
                         JOptionPane.showMessageDialog(null, "Tripleta A:\n\n" + T1.Mostrar());
-                    else
+                    else if (tipo == 2)
                         JOptionPane.showMessageDialog(null, "Forma 2:\n\n" + F2.Mostrar(tamFilaa,tamColumna));
                     break;
  
