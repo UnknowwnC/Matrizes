@@ -135,11 +135,11 @@ public class Forma2 {
     public void insertar(int posfil, int poscol, int num) {
       
         if (posfil < 0 || posfil >= filas || poscol < 0 || poscol >= columnas) {
-            JOptionPane.showMessageDialog(null, "Molto Alto mano ");
+            JOptionPane.showMessageDialog(null, "Desbordamiento  do la matriz  ");
             return;
         }
         Nodo p = Punta.getLf();
-        Nodo x = null;
+        Nodo x = Punta;
         boolean existe = false;
         while (p != Punta && existe == false) {
 
@@ -151,9 +151,9 @@ public class Forma2 {
         }
 
         if (existe == false) {
-            Nodo l = new Nodo(posfil, poscol, num);
-            insertarFila(l);
-            insertarColumna(l);
+            Nodo aux= new Nodo(posfil, poscol, num);
+            insertarFila(aux);
+            insertarColumna(aux);
 
         } else {
             int opc = Integer.parseInt(JOptionPane.showInputDialog("La posicion ya existe\n 1. Sumar\n 2. Reemplazar\n 3. Dejar igual"));
@@ -165,7 +165,7 @@ public class Forma2 {
                 x.setDato(num);
 
             } else if (opc <= 0 || opc > 3) {
-                JOptionPane.showMessageDialog(null, "Juanjose no escojas opciones que no existen ome");
+                JOptionPane.showMessageDialog(null, "Manito pero vo' so' bruto?");
             }
         }
     }
@@ -211,7 +211,7 @@ public class Forma2 {
         
 
         Nodo p = Punta.getLf();
-        Nodo ant = Punta; // inicia en Punta
+        Nodo ant = Punta; 
 
         while (p != Punta && p.getDato() != Dato) {
             ant = p;
@@ -230,11 +230,11 @@ public class Forma2 {
         else if (p == Punta.getLf()) {
             Punta.setLf(p.getLf());
             ant.setLf(p.getLf()); // el último apunta al nuevo primero
-        } else { // este else es para cuando halla q insertar 
-            ant.setLf(p.getLf());
+        } else { 
+            ant.setLf(p.getLf()); //en caso de que se necesite insertar
         }
 
-        //de aca para abajo es liga columna
+        //Ahora se elimina el Lc
         Nodo pc = Punta.getLc();
         Nodo antc = Punta;
 
@@ -243,7 +243,7 @@ public class Forma2 {
             pc = pc.getLc();
         }
 
-        if (pc != Punta) { // si lo encontró en columnas
+        if (pc != Punta) { 
             if (pc == Punta.getLc() && pc.getLc() == Punta) {
                 Punta.setLc(Punta);
             } else if (pc == Punta.getLc()) {
@@ -264,7 +264,7 @@ public class Forma2 {
         Nodo p = Punta.getLf();
         Nodo a = Punta;
 
-        // Buscar Nodo en la Lf 
+        
         while (p != Punta && (p.getFila() != Efila || p.getCol() != Ecolumna)) {
             a = p;
             p = p.getLf();
@@ -275,7 +275,7 @@ public class Forma2 {
             return;
         }
 
-       //elim de LF
+       //eliminar de LF
         a.setLf(p.getLf());
 
        //elim de Lc
