@@ -169,6 +169,40 @@ public class Forma2 {
             }
         }
     }
+    public void insertar2(int posfil, int poscol, int num) {
+
+    
+    if (posfil < 0 || posfil >= filas || poscol < 0 || poscol >= columnas) {
+        JOptionPane.showMessageDialog(null, "Posición fuera del rango");
+        return;
+    }
+
+    Nodo p = Punta.getLf();
+    Nodo x = null;
+    boolean existe = false;
+
+   
+    while (p != Punta && !existe) {
+
+        if (p.getFila() == posfil && p.getCol() == poscol) {
+            existe = true;
+            x = p;
+        }
+
+        p = p.getLf();
+    }
+
+    
+    if (!existe) {
+        Nodo l = new Nodo(posfil, poscol, num);
+        insertarFila(l);
+        insertarColumna(l);
+    }
+    
+    else {
+        x.setDato(x.getDato() + num);
+    }
+}
 
   
     
@@ -228,11 +262,11 @@ public class Forma2 {
        
 
         Nodo p = Punta.getLf();
-        Nodo antFila = Punta;
+        Nodo a = Punta;
 
         // Buscar Nodo en la Lf 
         while (p != Punta && (p.getFila() != Efila || p.getCol() != Ecolumna)) {
-            antFila = p;
+            a = p;
             p = p.getLf();
         }
 
@@ -241,21 +275,21 @@ public class Forma2 {
             return;
         }
 
-        // Eliminar de Lf 
-        antFila.setLf(p.getLf());
+       //elim de LF
+        a.setLf(p.getLf());
 
-        // Ahora eliminar de Lc
+       //elim de Lc
         Nodo q = Punta.getLc();
-        Nodo antCol = Punta;
+        Nodo aCol = Punta;
 
         //Buscar el nodo en la liga columna 
         while (q != Punta && q != p) {
-            antCol = q;
+            aCol = q;
             q = q.getLc();
         }
 
         if (q == p) {
-            antCol.setLc(q.getLc());
+            aCol.setLc(q.getLc());
         }
 
         JOptionPane.showMessageDialog(null, "Nodo eliminado correctamente");
@@ -272,26 +306,26 @@ public class Forma2 {
 
         Forma2 C = new Forma2(filas, columnas);
 
-        Nodo p = this.Punta.getLf();
+        Nodo pa = this.Punta.getLf();
 
         // copiar A a C
-        while (p != Punta) {
-            C.insertar(p.getFila(), p.getCol(), p.getDato());
-            p = p.getLf();
+        while (pa != Punta) {
+            C.insertar(pa.getFila(), pa.getCol(), pa.getDato());
+            pa = pa.getLf();
         }
 
-        Nodo q = B.Punta.getLf();
+        Nodo qb = B.Punta.getLf();
 
         // recorrer B
-        while (q != B.Punta) {
+        while (qb != B.Punta) {
 
             Nodo r = C.Punta.getLf();
             boolean existe = false;
 
             // buscar si existe y salirse 
             while (r != C.Punta) {
-                if (r.getFila() == q.getFila() && r.getCol() == q.getCol()) {
-                    r.setDato(r.getDato() + q.getDato());
+                if (r.getFila() == qb.getFila() && r.getCol() == qb.getCol()) {
+                    r.setDato(r.getDato() + qb.getDato());
                     existe = true;
                     break;
                 }
@@ -300,16 +334,51 @@ public class Forma2 {
 
             // si no existe, llamar insertar que es como sumar
             if (!existe) {
-                C.insertar(q.getFila(), q.getCol(), q.getDato());
+                C.insertar2(qb.getFila(), qb.getCol(), qb.getDato());
             }
 
-            q = q.getLf();
+            qb = qb.getLf();
         }
 
         return C;
     }
+    
+    public Forma2 multiplicar(Forma2 B) {
+
+        if (this.columnas != B.filas) {
+            JOptionPane.showMessageDialog(null, "No se pueden Multiplicar");
+            return null;
+        }
+
+        Forma2 C = new Forma2(this.filas, B.columnas);
+
+        Nodo p = this.Punta.getLf();
+
+        while (p != this.Punta) {
+            Nodo q = B.Punta.getLf();
+
+            while (q != B.Punta) {
+                if (p.getCol() == q.getFila()) {
+
+                    int i = p.getFila();
+                    int j = q.getCol();
+                    int valor = p.getDato() * q.getDato();
+
+                    C.insertar2(i, j, valor);
+                }
+
+                q = q.getLf();
+            }
+
+            p = p.getLf();
+        }
+
+        return C;
+    }
+    
 
 }
+
         
         
     
