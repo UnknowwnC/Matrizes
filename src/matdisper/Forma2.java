@@ -297,51 +297,45 @@ public class Forma2 {
 
   
 
-    public Forma2 sumar(Forma2 B) {
+public Forma2 sumar(Forma2 B) {
 
-        if (this.filas != B.filas || this.columnas != B.columnas) {
-            JOptionPane.showMessageDialog(null, "No se pueden sumar");
-            return null;
-        }
+    if (this.filas != B.filas || this.columnas != B.columnas) {
+        JOptionPane.showMessageDialog(null, "No se pueden sumar");
+        return null;
+    }
 
-        Forma2 C = new Forma2(filas, columnas);
+    Nodo qb = B.Punta.getLf();
+
+    // recorrer B
+    while (qb != B.Punta) {
 
         Nodo pa = this.Punta.getLf();
+        boolean existe = false;
 
-        // copiar A a C
-        while (pa != Punta) {
-            C.insertar(pa.getFila(), pa.getCol(), pa.getDato());
+        // buscar misma posicion en A
+        while (pa != this.Punta) {
+
+            if (pa.getFila() == qb.getFila() &&
+                pa.getCol() == qb.getCol()) {
+
+                pa.setDato(pa.getDato() + qb.getDato());
+                existe = true;
+                break;
+            }
+
             pa = pa.getLf();
         }
 
-        Nodo qb = B.Punta.getLf();
-
-        // recorrer B
-        while (qb != B.Punta) {
-
-            Nodo r = C.Punta.getLf();
-            boolean existe = false;
-
-            // buscar si existe y salirse 
-            while (r != C.Punta) {
-                if (r.getFila() == qb.getFila() && r.getCol() == qb.getCol()) {
-                    r.setDato(r.getDato() + qb.getDato());
-                    existe = true;
-                    break;
-                }
-                r = r.getLf();
-            }
-
-            // si no existe, llamar insertar que es como sumar
-            if (!existe) {
-                C.insertar2(qb.getFila(), qb.getCol(), qb.getDato());
-            }
-
-            qb = qb.getLf();
+        // si no existe en A entonces se insertar en A
+        if (!existe) {
+            this.insertar2(qb.getFila(), qb.getCol(), qb.getDato());
         }
 
-        return C;
+        qb = qb.getLf();
     }
+
+    return this;   
+}
     
     public Forma2 multiplicar(Forma2 B) {
 
